@@ -1,0 +1,110 @@
+<% if(productos.claveProductos.length > 0){ %> 
+    <div class="container bg-light text-white p-3">
+        <h2 class="text-primary mb-5">Productos disponibles</h2>
+            <div class="d-flex flex-wrap">
+            <% for (const producto of productos.claveProductos) {%> 
+            
+                <div class="card m-3" style="width: 18rem;">
+                    <img src="<%=producto.foto %>" class="card-img-top" alt="<%=producto.nombre %>">
+                    <div class="card-body">
+                      <h5 class="card-title text-secondary"><%=producto.nombre %> <span class="text-success">$ <%=producto.precio %></span></h5>
+                      <h6 class="card-subtitle mb-2 text-muted">Codigo: <%=producto.codigo %> <span class="text-primary">Stock: <%=producto.stock %></span></h6>
+                      <p class="card-text text-secondary"><%=producto.descripcion %></p>
+                      <% if(productos.claveAdm == true){ %> 
+                      <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#producto<%=producto.id %>">Actualizar</button>
+                      <button onclick="eliminarProducto('<%=producto.id %>')" class="btn btn-primary">Eliminar</button>
+                      <% } %> 
+                      <button onclick="agregarAlCarrito('<%=producto.id %>', '<%=productos.claveCarritos[0].id %>')" class="btn btn-success mt-2">Agregar al carrito</button>
+                    </div>
+                </div>
+
+                <!-- Modal -->
+                <div class="modal fade" id="producto<%=producto.id %>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                        <h5 class="modal-title text-secondary" id="exampleModalLabel">Actualizar producto</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <form onsubmit="return actualizarProducto('<%=producto.id %>')">
+                                <div class="mb-3">
+                                    <label for="nombre<%=producto.id %>"><b>Nombre</b></label>
+                                    <input id="nombre<%=producto.id %>" class="form-control" type="text" name="nombre" value="<%=producto.nombre %>">
+                                </div>
+                                <div class="mb-3">
+                                    <label for="descripcion<%=producto.id %>"><b>Nombre</b></label>
+                                    <input id="descripcion<%=producto.id %>" class="form-control" type="text" name="descripcion" value="<%=producto.descripcion %>">
+                                </div>
+                                <div class="mb-3">
+                                    <label for="codigo<%=producto.id %>"><b>Nombre</b></label>
+                                    <input id="codigo<%=producto.id %>" class="form-control" type="text" name="codigo" value="<%=producto.codigo %>">
+                                </div>
+                                <div class="mb-3">
+                                    <label for="precio<%=producto.id %>"><b>Precio</b></label>
+                                    <input id="precio<%=producto.id %>" class="form-control" type="number" name="precio" value="<%=producto.precio %>">
+                                </div>
+                                <div class="mb-3">
+                                    <label for="foto<%=producto.id %>"><b>Foto</b></label>
+                                    <input id="foto<%=producto.id %>" class="form-control" type="text" name="foto" value="<%=producto.foto %>">
+                                </div>
+                                <div class="mb-3">
+                                    <label for="stock<%=producto.id %>"><b>Foto</b></label>
+                                    <input id="stock<%=producto.id %>" class="form-control" type="text" name="stock" value="<%=producto.stock %>">
+                                </div>
+                                <button class="btn btn-success mt-3 mb-5">Actualizar</button>
+                            </form>
+                        </div>
+                    </div>
+                    </div>
+                </div>
+
+                <div class="position-fixed bottom-50 end-50 p-3" style="z-index: 11">
+                    <div id="liveToast<%=producto.id %>" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+                      <div class="toast-header">
+                        <strong class="me-auto"><%=producto.nombre %> agregado al carrito</strong>
+                        <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+                      </div>
+                    </div>
+                </div>
+
+            <% } %> 
+            </div>
+            <% if(productos.claveAdm == true){ %> 
+                <h2 class="text-primary mt-5 mb-4">Ingresar producto</h2>
+
+                <form class="w-50 text-secondary" onsubmit="return ingresarProducto()">
+                    <div class="mb-3">
+                        <label for="nombreForm"><b>Nombre</b></label>
+                        <input id="nombreForm" class="form-control" type="text" name="nombre">
+                    </div>
+                    <div class="mb-3">
+                        <label for="descripcionForm"><b>Descripcion</b></label>
+                        <input id="descripcionForm" class="form-control" type="text" name="descripcion">
+                    </div>
+                    <div class="mb-3">
+                        <label for="codigoForm"><b>Codigo</b></label>
+                        <input id="codigoForm" class="form-control" type="text" name="codigo">
+                    </div>
+                    <div class="mb-3">
+                        <label for="precioForm"><b>Precio</b></label>
+                        <input id="precioForm" class="form-control" type="number" name="precio">
+                    </div>
+                    <div class="mb-3">
+                        <label for="fotoForm"><b>Foto</b></label>
+                        <input id="fotoForm" class="form-control" type="text" name="foto">
+                    </div>
+                    <div class="mb-3">
+                        <label for="stockForm"><b>Stock</b></label>
+                        <input id="stockForm" class="form-control" type="number" name="stock">
+                    </div>
+                    <button class="btn btn-success mt-3 mb-5">Enviar</button>
+                </form>
+                <a href="./carrito/<%=productos.claveCarritos[0].id %>/productos" class="btn btn-primary">Ir al carrito</a>
+            <% } %>
+    </div>
+<% } else { %> 
+    <h3 class="alert alert-warning">No hay productos disponibles</h3>
+    
+<% } %> 
+
