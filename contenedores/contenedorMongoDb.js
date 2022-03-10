@@ -51,6 +51,18 @@ mongoose.connect(URL)
             }
         }
 
+        async actualizarProducto(data) {
+            
+            try {
+                let resultado = await ProductosModelo.updateOne({_id: data._id}, {$set: {nombre: data.nombre, precio: data.precio, foto: data.foto, descripcion: data.descripcion, stock: data.stock, codigo: data.codigo}})
+                console.log(data)
+                return resultado
+            } catch (error) {
+                console.err(`Error: ${error}`);
+            } 
+        
+        }
+
 
     }
 

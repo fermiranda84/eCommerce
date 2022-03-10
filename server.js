@@ -227,11 +227,40 @@ const obtenerProductos = async () => {
     
         socket.emit('productos', objetosProductos)
         socket.emit('carrito', listaCarritos)
+
+
+
+        socket.on('productoActualizado', data =>{
+        
+            //creo la tabla en la base de datos de productos
+            objContenedorMongoDb.actualizarProducto(data)
+                .then(()=>{
+                    console.log("Producto actualizado en mongoDB");
+                })
+                
+                .finally(async (res)=>{
+                    let listaProductosActualizados = await objContenedorMongoDb.listarProductos()
+                    objetosProductos.claveProductosMongo = listaProductosActualizados
+                    console.log(objetosProductos)
+                    io.sockets.emit('productos', objetosProductos);
+                })
+                
+        })
+
+
         
     })
+
+
+
 }
 
 obtenerProductos()
+
+
+
+
+
 
 
 

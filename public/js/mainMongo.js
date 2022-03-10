@@ -18,3 +18,19 @@ function makeTablaProductosMongo(productos) {
             return html
         })
 }
+
+
+function actualizarProducto(productoId) {
+
+    const nombre = document.getElementById(`nombre${productoId}`)
+    const precio = document.getElementById(`precio${productoId}`)
+    const foto = document.getElementById(`foto${productoId}`)
+    const descripcion = document.getElementById(`descripcion${productoId}`)
+    const stock = document.getElementById(`stock${productoId}`)
+    const codigo = document.getElementById(`codigo${productoId}`) 
+
+    socket.emit('productoActualizado', {_id: productoId, nombre: nombre.value, precio: precio.value, foto: foto.value, descripcion: descripcion.value, stock: stock.value, codigo: codigo.value})
+    
+    return
+
+}
