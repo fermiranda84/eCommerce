@@ -11,6 +11,7 @@ const ContenedorMongo = require('./contenedores/contenedorMongoDb');
 const objContenedorMongoDb = new ContenedorMongo()
 
 
+
 const app = express();
 routerProductos.use(express.json());
 routerCarrito.use(express.json());
@@ -236,6 +237,41 @@ const obtenerProductos = async () => {
             objContenedorMongoDb.actualizarProducto(data)
                 .then(()=>{
                     console.log("Producto actualizado en mongoDB");
+                })
+                
+                .finally(async (res)=>{
+                    let listaProductosActualizados = await objContenedorMongoDb.listarProductos()
+                    objetosProductos.claveProductosMongo = listaProductosActualizados
+                    console.log(objetosProductos)
+                    io.sockets.emit('productos', objetosProductos);
+                })
+                
+        })
+
+        socket.on('productoEliminado', data =>{
+        
+            //creo la tabla en la base de datos de productos
+            objContenedorMongoDb.eliminarProducto(data)
+                .then(()=>{
+                    console.log("Producto eliminado en mongoDB");
+                })
+                
+                .finally(async (res)=>{
+                    let listaProductosActualizados = await objContenedorMongoDb.listarProductos()
+                    objetosProductos.claveProductosMongo = listaProductosActualizados
+                    console.log(objetosProductos)
+                    io.sockets.emit('productos', objetosProductos);
+                })
+                
+        })
+
+
+        socket.on('productoIngresado', data =>{
+        
+            //creo la tabla en la base de datos de productos
+            objContenedorMongoDb.ingresarProducto(data)
+                .then(()=>{
+                    console.log("Producto ingresado en mongoDB");
                 })
                 
                 .finally(async (res)=>{

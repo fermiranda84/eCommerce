@@ -37,6 +37,19 @@ mongoose.connect(URL)
 
         }
 
+        async ingresarProducto(data) {
+
+            try {
+                    const obj = new ProductosModelo(data)
+                    const save = await obj.save()
+                    return save
+                
+            } catch (error) {
+                console.error(error)
+            }
+
+        }
+
 
         async listarProductos() {
             
@@ -58,13 +71,27 @@ mongoose.connect(URL)
                 console.log(data)
                 return resultado
             } catch (error) {
-                console.err(`Error: ${error}`);
+                console.error(`Error: ${error}`);
             } 
+        
+        }
+
+        async eliminarProducto(data) {
+            
+            try {
+                let resultado = await ProductosModelo.deleteOne({_id: data._id})
+                return resultado
+        
+            } catch (error) {
+                console.error(`Error: ${error}`)
+            }
+        
         
         }
 
 
     }
+
 
     module.exports = ContenedorMongo
     
@@ -72,4 +99,3 @@ mongoose.connect(URL)
 // .catch((err)=>{
 //     console.error(err)
 // });
-

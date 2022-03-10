@@ -34,3 +34,27 @@ function actualizarProducto(productoId) {
     return
 
 }
+
+function eliminarProducto(productoId) {
+
+    socket.emit('productoEliminado', {_id: productoId})
+    
+    return false
+
+}
+
+
+function ingresarProducto() {
+
+    const nombre = document.getElementById('nombreForm')
+    const precio = document.getElementById('precioForm')
+    const foto = document.getElementById('fotoForm')
+    const descripcion = document.getElementById('descripcionForm')
+    const stock = document.getElementById('stockForm')
+    const codigo = document.getElementById('codigoForm') 
+
+    socket.emit('productoIngresado', {nombre: nombre.value, precio: precio.value, foto: foto.value, descripcion: descripcion.value, stock: stock.value, codigo: codigo.value})
+    
+    return false
+
+}
