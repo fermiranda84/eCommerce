@@ -312,9 +312,8 @@ const obtenerProductos = async () => {
                 })
                 
                 .finally(async (res)=>{
-                    let listaProductosActualizadosCarrito = await objContenedorMongoDb.listarProductosCarrito()
-                    objetosProductos.claveCarritosMongo = listaProductosActualizadosCarrito
-                    io.sockets.emit('carritoMongo', objetosProductos.claveCarritosMongo)
+                    listaCarritosMongo = await objContenedorMongoDb.listarProductosCarrito()
+                    socket.emit('carritoMongo', listaCarritosMongo)
                 })
                 
         })
