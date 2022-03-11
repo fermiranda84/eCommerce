@@ -53,6 +53,10 @@ app.get('/carrito/1/productos', (req, res) => {
     res.render('carrito', { listaCarritos });
 })
 
+app.get('/mongo/carrito/1/productos', (req, res) => {
+    res.render('carritoMongo', { listaCarritosMongo })
+})
+
 //Verbos de distintas acciones de productos
 routerProductos.get('/:id', (req, res)=>{
     let productoId = listaProductos.find(x => x.id == parseInt(req.params.id))
@@ -211,15 +215,17 @@ routerProductos.get('*', (req, res) => {
 
 
 let listaProductosMongo
+let listaCarritosMongo
 const obtenerProductos = async () => {
 
     listaProductosMongo = await objContenedorMongoDb.listarProductos()
+    listaCarritosMongo = await objContenedorMongoDb.listarProductosCarrito()
     //Armo un objeto con las listas y la clave adminitrador para enviar al frontend
     let objetosProductos = {
         claveProductos: listaProductos,
         claveCarritos: listaCarritos,
         claveProductosMongo: listaProductosMongo,
-        claveCarritosMongo: listaCarritos,
+        claveCarritosMongo: listaCarritosMongo,
         claveAdm: administrador
     }
     
@@ -228,6 +234,7 @@ const obtenerProductos = async () => {
     
         socket.emit('productos', objetosProductos)
         socket.emit('carrito', listaCarritos)
+        socket.emit('carritoMongo', listaCarritosMongo)
 
 
 
@@ -242,8 +249,7 @@ const obtenerProductos = async () => {
                 .finally(async (res)=>{
                     let listaProductosActualizados = await objContenedorMongoDb.listarProductos()
                     objetosProductos.claveProductosMongo = listaProductosActualizados
-                    console.log(objetosProductos)
-                    io.sockets.emit('productos', objetosProductos);
+                    io.sockets.emit('productos', objetosProductos)
                 })
                 
         })
@@ -259,7 +265,6 @@ const obtenerProductos = async () => {
                 .finally(async (res)=>{
                     let listaProductosActualizados = await objContenedorMongoDb.listarProductos()
                     objetosProductos.claveProductosMongo = listaProductosActualizados
-                    console.log(objetosProductos)
                     io.sockets.emit('productos', objetosProductos);
                 })
                 
@@ -277,8 +282,40 @@ const obtenerProductos = async () => {
                 .finally(async (res)=>{
                     let listaProductosActualizados = await objContenedorMongoDb.listarProductos()
                     objetosProductos.claveProductosMongo = listaProductosActualizados
-                    console.log(objetosProductos)
                     io.sockets.emit('productos', objetosProductos);
+                })
+                
+        })
+
+        socket.on('productoCarritoAgregado', data =>{
+        
+            //creo la tabla en la base de datos de productos
+            objContenedorMongoDb.ingresarProductoCarrito(data)
+                .then(()=>{
+                    console.log("Producto agregado al carrito en mongoDB");
+                })
+
+                .finally(async (res)=>{
+                    let listaProductosActualizadosCarrito = await objContenedorMongoDb.listarProductosCarrito()
+                    objetosProductos.claveCarritosMongo = listaProductosActualizadosCarrito
+                    io.sockets.emit('carritoMongo', objetosProductos.claveCarritosMongo)
+                })
+                
+        })
+
+
+        socket.on('productoCarritoEliminado', data =>{
+        
+            //creo la tabla en la base de datos de productos
+            objContenedorMongoDb.eliminarProductoCarrito(data)
+                .then(()=>{
+                    console.log("Producto eliminado del carrito en mongoDB");
+                })
+                
+                .finally(async (res)=>{
+                    let listaProductosActualizadosCarrito = await objContenedorMongoDb.listarProductosCarrito()
+                    objetosProductos.claveCarritosMongo = listaProductosActualizadosCarrito
+                    io.sockets.emit('carritoMongo', objetosProductos.claveCarritosMongo)
                 })
                 
         })
@@ -292,11 +329,6 @@ const obtenerProductos = async () => {
 }
 
 obtenerProductos()
-
-
-
-
-
 
 
 

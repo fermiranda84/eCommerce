@@ -14,7 +14,7 @@
                       <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#producto<%=producto._id %>">Actualizar</button>
                       <button onclick="eliminarProducto('<%=producto._id %>')" class="btn btn-primary">Eliminar</button>
                       <% } %> 
-                      <button onclick="agregarAlCarrito('<%=producto._id %>', '<%=productos.claveCarritosMongo[0]._id %>')" class="btn btn-success mt-2">Agregar al carrito</button>
+                      <button onclick="agregarAlCarrito('<%=producto._id %>')" class="btn btn-success mt-2">Agregar al carrito</button>
                     </div>
                 </div>
 
@@ -27,7 +27,7 @@
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div class="modal-body">
-                            <form onsubmit="return actualizarProducto('<%=producto._id %>')">
+                            <form onsubmit="actualizarProducto('<%=producto._id %>')">
                                 <div class="mb-3">
                                     <label for="nombre<%=producto._id %>"><b>Nombre</b></label>
                                     <input id="nombre<%=producto._id %>" class="form-control" type="text" name="nombre" value="<%=producto.nombre %>">
@@ -73,7 +73,7 @@
             <% if(productos.claveAdm == true){ %> 
                 <h2 class="text-primary mt-5 mb-4">Ingresar producto</h2>
 
-                <form class="w-50 text-secondary" onsubmit="return ingresarProducto()">
+                <form class="w-50 text-secondary" onsubmit="ingresarProducto()">
                     <div class="mb-3">
                         <label for="nombreForm"><b>Nombre</b></label>
                         <input id="nombreForm" class="form-control" type="text" name="nombre">
@@ -100,7 +100,7 @@
                     </div>
                     <button class="btn btn-success mt-3 mb-5">Enviar</button>
                 </form>
-                <a href="./carrito/<%=productos.claveCarritosMongo[0]._id %>/productos" class="btn btn-primary">Ir al carrito</a>
+                <a href="./mongo/carrito/1/productos" class="btn btn-primary">Ir al carrito</a>
             <% } %>
     </div>
 <% } else { %> 

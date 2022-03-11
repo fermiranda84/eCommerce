@@ -27,7 +27,7 @@
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div class="modal-body">
-                            <form onsubmit="return actualizarProducto('<%=producto.id %>')">
+                            <form onsubmit="actualizarProducto('<%=producto.id %>')">
                                 <div class="mb-3">
                                     <label for="nombre<%=producto.id %>"><b>Nombre</b></label>
                                     <input id="nombre<%=producto.id %>" class="form-control" type="text" name="nombre" value="<%=producto.nombre %>">
@@ -73,7 +73,7 @@
             <% if(productos.claveAdm == true){ %> 
                 <h2 class="text-primary mt-5 mb-4">Ingresar producto</h2>
 
-                <form class="w-50 text-secondary" onsubmit="return ingresarProducto()">
+                <form class="w-50 text-secondary" onsubmit="ingresarProducto()">
                     <div class="mb-3">
                         <label for="nombreForm"><b>Nombre</b></label>
                         <input id="nombreForm" class="form-control" type="text" name="nombre">

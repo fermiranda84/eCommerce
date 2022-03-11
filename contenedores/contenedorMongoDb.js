@@ -1,4 +1,5 @@
 const ProductosModelo = require('../models/Productos.model');
+const CarritosModelo = require('../models/Carritos.model')
 const mongoose = require('mongoose');
 
 const URL = 'mongodb+srv://coderhouse:coderhouse@cluster0.z6imv.mongodb.net/ecommerce?retryWrites=true&w=majority';
@@ -55,8 +56,6 @@ mongoose.connect(URL)
             
             try {
                 let productos = await ProductosModelo.find({})
-                // console.log(productos)
-                
                 return productos
                 
             } catch (error) {
@@ -80,6 +79,50 @@ mongoose.connect(URL)
             
             try {
                 let resultado = await ProductosModelo.deleteOne({_id: data._id})
+                return resultado
+        
+            } catch (error) {
+                console.error(`Error: ${error}`)
+            }
+        
+        
+        }
+
+
+
+        async listarProductosCarrito() {
+            
+            try {
+                let productos = await CarritosModelo.find({})
+                return productos
+                
+            } catch (error) {
+                console.error(error)
+            }
+        }
+
+
+
+        async ingresarProductoCarrito(data) {
+
+            try {
+                    let producto = await ProductosModelo.findOne({_id: data})
+                    let productoObj = {nombre: producto.nombre, precio: producto.precio, foto: producto.foto, descripcion: producto.descripcion, stock: producto.stock, codigo: producto.codigo, idOriginal: producto._id}
+                    const obj = new CarritosModelo(productoObj)
+                    const save = await obj.save()
+                    return save
+                
+            } catch (error) {
+                console.error(error)
+            }
+
+        }
+
+
+        async eliminarProductoCarrito(data) {
+            
+            try {
+                let resultado = await CarritosModelo.deleteOne({_id: data._id})
                 return resultado
         
             } catch (error) {
