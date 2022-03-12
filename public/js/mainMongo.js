@@ -60,8 +60,8 @@ function ingresarProducto() {
 }
 
 
-function agregarAlCarrito(productoId) {
-    socket.emit('productoCarritoAgregado', {_id: productoId})
+function agregarAlCarrito(productoId, productoNombre, productoPrecio, productoFoto, productoDescripcion, productoStock, productoCodigo) {
+    socket.emit('productoCarritoAgregado', {_id: productoId, nombre: productoNombre, precio: productoPrecio, foto: productoFoto, descripcion: productoDescripcion, stock: productoStock, codigo: productoCodigo})
     let toastLiveExample = document.getElementById(`liveToast${productoId}`)
     new bootstrap.Toast(toastLiveExample).show()
     return 

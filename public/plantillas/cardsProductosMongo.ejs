@@ -14,7 +14,7 @@
                       <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#producto<%=producto._id %>">Actualizar</button>
                       <button onclick="eliminarProducto('<%=producto._id %>')" class="btn btn-primary">Eliminar</button>
                       <% } %> 
-                      <button onclick="agregarAlCarrito('<%=producto._id %>')" class="btn btn-success mt-2">Agregar al carrito</button>
+                      <button onclick="agregarAlCarrito('<%=producto._id %>', '<%=producto.nombre %>', '<%=producto.precio %>', '<%=producto.foto %>', '<%=producto.descripcion %>', '<%=producto.stock %>', '<%=producto.codigo %>')" class="btn btn-success mt-2">Agregar al carrito</button>
                     </div>
                 </div>
 

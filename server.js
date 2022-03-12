@@ -1,15 +1,29 @@
 const express = require('express');
+// import express from "express";
 const {Server: HttpServer} = require('http');
 const {Server: IOServer} = require('socket.io');
-const Contenedor = require('./contenedores/contenedor');
-const objContenedor = new Contenedor();
+// import { createServer } from "http";
+// import { Server } from "socket.io";
+// const Contenedor = require('./contenedores/contenedor');
+// const objContenedor = new Contenedor();
+const ContenedorProductos = require('./daos/productos/productosMemArchivo.dao')
+const objContenedorProductos = new ContenedorProductos
+const ContenedorCarrito = require('./daos/carrito/carritoMemArchivo.dao')
+const objContenedorCarrito = new ContenedorCarrito
 const routerProductos = express.Router();
 const routerCarrito = express.Router();
 const bodyParser = require('body-parser');
+// import bodyParser from "body-parser"
 const moduloPersistencia = require('./persistencia');
-const ContenedorMongo = require('./contenedores/contenedorMongoDb');
-const objContenedorMongoDb = new ContenedorMongo()
-
+// import moduloPersistencia from "./persistencia.js"
+//const ContenedorMongo = require('./contenedores/contenedorMongoDb');
+//import ContenedorMongo from "./contenedores/contenedorMongoDb.js";
+//const objContenedorMongoDb = new ContenedorMongo()
+const ProductosDAOMongo = require('./daos/productos/productosMongoDb.dao')
+// import ProductosDAOMongo from "./daos/productos/productosMongoDb.dao.js";
+const objContenedorMongoDbProductos = new ProductosDAOMongo()
+const CarritoDAOMongo = require('./daos/carrito/carritoMongoDb.dao')
+const objContenedorMongoDBCarrito = new CarritoDAOMongo()
 
 
 const app = express();
@@ -18,6 +32,8 @@ routerCarrito.use(express.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 const httpServer = new HttpServer(app);
 const io = new IOServer(httpServer);
+// const httpServer = createServer();
+// const io = new Server(httpServer)
 
 //seteo la carpeta publica para usar y las vistas para las plantillas dentro
 app.use(express.static('public'))
@@ -25,8 +41,8 @@ app.set('views', './public/views');
 app.set('view engine', 'ejs');
 
 //Obtengo los productos y carrito guardados en la clase contenedor
-let listaProductos = objContenedor.getAll();
-let listaCarritos = objContenedor.getCarts();
+let listaProductos = objContenedorProductos.getAll();
+let listaCarritos = objContenedorCarrito.getCarts();
 
 
 //variable para permisos de administrador
@@ -218,8 +234,8 @@ let listaProductosMongo
 let listaCarritosMongo
 const obtenerProductos = async () => {
 
-    listaProductosMongo = await objContenedorMongoDb.listarProductos()
-    listaCarritosMongo = await objContenedorMongoDb.listarProductosCarrito()
+    listaProductosMongo = await objContenedorMongoDbProductos.listarProductos()
+    listaCarritosMongo = await objContenedorMongoDBCarrito.listarProductosCarrito()
     //Armo un objeto con las listas y la clave adminitrador para enviar al frontend
     let objetosProductos = {
         claveProductos: listaProductos,
@@ -241,13 +257,13 @@ const obtenerProductos = async () => {
         socket.on('productoActualizado', data =>{
         
             //creo la tabla en la base de datos de productos
-            objContenedorMongoDb.actualizarProducto(data)
+            objContenedorMongoDbProductos.actualizarProducto(data)
                 .then(()=>{
                     console.log("Producto actualizado en mongoDB");
                 })
                 
                 .finally(async (res)=>{
-                    let listaProductosActualizados = await objContenedorMongoDb.listarProductos()
+                    let listaProductosActualizados = await objContenedorMongoDbProductos.listarProductos()
                     objetosProductos.claveProductosMongo = listaProductosActualizados
                     io.sockets.emit('productos', objetosProductos)
                 })
@@ -257,13 +273,13 @@ const obtenerProductos = async () => {
         socket.on('productoEliminado', data =>{
         
             //creo la tabla en la base de datos de productos
-            objContenedorMongoDb.eliminarProducto(data)
+            objContenedorMongoDbProductos.eliminarProducto(data)
                 .then(()=>{
                     console.log("Producto eliminado en mongoDB");
                 })
                 
                 .finally(async (res)=>{
-                    let listaProductosActualizados = await objContenedorMongoDb.listarProductos()
+                    let listaProductosActualizados = await objContenedorMongoDbProductos.listarProductos()
                     objetosProductos.claveProductosMongo = listaProductosActualizados
                     io.sockets.emit('productos', objetosProductos);
                 })
@@ -274,13 +290,13 @@ const obtenerProductos = async () => {
         socket.on('productoIngresado', data =>{
         
             //creo la tabla en la base de datos de productos
-            objContenedorMongoDb.ingresarProducto(data)
+            objContenedorMongoDbProductos.ingresarProducto(data)
                 .then(()=>{
                     console.log("Producto ingresado en mongoDB");
                 })
                 
                 .finally(async (res)=>{
-                    let listaProductosActualizados = await objContenedorMongoDb.listarProductos()
+                    let listaProductosActualizados = await objContenedorMongoDbProductos.listarProductos()
                     objetosProductos.claveProductosMongo = listaProductosActualizados
                     io.sockets.emit('productos', objetosProductos);
                 })
@@ -290,13 +306,13 @@ const obtenerProductos = async () => {
         socket.on('productoCarritoAgregado', data =>{
         
             //creo la tabla en la base de datos de productos
-            objContenedorMongoDb.ingresarProductoCarrito(data)
+            objContenedorMongoDBCarrito.ingresarProductoCarrito(data)
                 .then(()=>{
                     console.log("Producto agregado al carrito en mongoDB");
                 })
 
                 .finally(async (res)=>{
-                    listaCarritosMongo = await objContenedorMongoDb.listarProductosCarrito()
+                    listaCarritosMongo = await objContenedorMongoDBCarrito.listarProductosCarrito()
                     socket.emit('carritoMongo', listaCarritosMongo)
                 })
                 
@@ -306,13 +322,13 @@ const obtenerProductos = async () => {
         socket.on('productoCarritoEliminado', data =>{
         
             //creo la tabla en la base de datos de productos
-            objContenedorMongoDb.eliminarProductoCarrito(data)
+            objContenedorMongoDBCarrito.eliminarProductoCarrito(data)
                 .then(()=>{
                     console.log("Producto eliminado del carrito en mongoDB");
                 })
                 
                 .finally(async (res)=>{
-                    listaCarritosMongo = await objContenedorMongoDb.listarProductosCarrito()
+                    listaCarritosMongo = await objContenedorMongoDBCarrito.listarProductosCarrito()
                     socket.emit('carritoMongo', listaCarritosMongo)
                 })
                 
@@ -338,4 +354,10 @@ const PORT = 8080
 const server = httpServer.listen(PORT, () => {
     console.log(`Servidor escuchando en el puerto ${PORT}`)
 })
+
+// const PORT = 8080;
+// const server = app.listen(PORT, () => {
+//     console.log(`Servidor escuchando en el puerto ${PORT}`)
+// });
+
 server.on('error', error => console.log(`Error en servidor ${error}`))

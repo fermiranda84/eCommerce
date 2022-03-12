@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+// import mongoose from "mongoose";
 
 const carritoSchema = new mongoose.Schema({
     nombre: String,
@@ -13,4 +14,5 @@ const carritoSchema = new mongoose.Schema({
 
 const CarritosModelo = mongoose.model('carrito', carritoSchema);
 
+// export default CarritosModelo
 module.exports = CarritosModelo
