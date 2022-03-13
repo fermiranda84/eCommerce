@@ -1,38 +1,19 @@
-// const ProductosModelo = require('../models/Productos.model');
-// const CarritosModelo = require('../models/Carritos.model')
-// import ProductosModelo from '../models/Productos.model.js'
-// import CarritosModelo from '../models/Carritos.model.js'
-const mongoose = require('mongoose');
-// import mongoose from 'mongoose';
+const mongoose = require('mongoose')
 const urlConfig = require('../utils/config')
-// import urlConfig from '../utils/config.js'
 
 const URL = urlConfig.mongodb.url
 
-
 mongoose.connect(URL)
-// .then(async ()=>{
-
-//     console.log('base de datos conectada')
 
 
     class ContenedorMongo {
 
 
         constructor (nombreColeccion, esquema) {
-            // this.listaProductos = [
-            //     {timestamp: 1644501352847, nombre: 'Martillo', descripcion: 'Mango ergonómico de fibra de vidrio ultra resistente.', codigo: 'M124', foto: 'https://http2.mlstatic.com/D_NQ_NP_778994-MLA48637163054_122021-O.webp', precio: 1275, stock: 10},
-            //     {timestamp: 1644501352847, nombre: 'Pinza Universal', descripcion: 'Pinza Universal 180 mm Mango Soft Touch', codigo: 'M128', foto: 'https://http2.mlstatic.com/D_NQ_NP_850195-MLA45726230545_042021-O.webp', precio: 819, stock: 25},
-            // ]
-            
-            
+           
             this.coleccion = mongoose.model(nombreColeccion, esquema)
-    
         }
 
-
-
-       
 
         async ingresarProducto(data) {
 
@@ -132,11 +113,3 @@ mongoose.connect(URL)
 
 
     module.exports = ContenedorMongo
-
-// export default ContenedorMongo;
-
-    
-// })
-// .catch((err)=>{
-//     console.error(err)
-// });

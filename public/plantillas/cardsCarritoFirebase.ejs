@@ -1,0 +1,26 @@
+<% if(carrito.length > 0){ %> 
+    <div class="container bg-light text-white p-3">
+        <h2 class="text-primary mb-5">Carrito de compras</h2>
+        <div class="d-flex flex-wrap">
+            <% for (const carritoItem of carrito) {%> 
+            
+                <div class="card m-3" style="width: 18rem;">
+                    <img src="<%=carritoItem.foto %>" class="card-img-top" alt="<%=carritoItem.nombre %>">
+                    <div class="card-body">
+                      <h5 class="card-title text-secondary"><%=carritoItem.nombre %> <span class="text-success">$ <%=carritoItem.precio %></span></h5>
+                      <h6 class="card-subtitle mb-2 text-muted"><%=carritoItem.codigo %> <span class="text-primary">Stock: <%=carritoItem.stock %></span></h6>
+                      <p class="card-text text-secondary"><%=carritoItem.descripcion %></p>
+                      <button onclick="eliminarProductoCarrito('<%=carritoItem.id %>')" class="btn btn-primary">Eliminar</button>
+                    </div>
+                </div>
+            <% } %> 
+        </div>
+        <a href="../../../firebase" class="btn btn-success">Ir a productos</a> 
+    </div>
+    
+<% } else { %> 
+    <div class="container">
+        <h3 class="alert alert-warning">No hay productos en el carrito</h3>
+        <a href="../../../firebase" class="btn btn-success">Ir a productos</a>
+    </div>
+<% } %> 

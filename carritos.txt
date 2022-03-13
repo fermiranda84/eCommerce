@@ -4,6 +4,16 @@
     "timestamp": 1644501352847,
     "productos": [
       {
+        "id": 2,
+        "timestamp": 1644501352847,
+        "nombre": "Pinza Universal",
+        "descripcion": "Pinza Universal 180 mm Mango Soft Touch",
+        "codigo": "M128",
+        "foto": "https://http2.mlstatic.com/D_NQ_NP_850195-MLA45726230545_042021-O.webp",
+        "precio": 819,
+        "stock": 25
+      },
+      {
         "id": 1,
         "timestamp": 1644501352847,
         "nombre": "Martillo",
