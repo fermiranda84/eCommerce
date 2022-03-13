@@ -12,7 +12,7 @@ class Contenedor {
     }
 
     //Metodo para devolver el array de productos
-    getAll(){
+    listarProductos(){
         try {
             return this.lista
         } catch (error) {
@@ -21,7 +21,7 @@ class Contenedor {
     }
 
     //Metodo para devolver el array del carrito
-    getCarts(){
+    listarProductosCarrito(){
         try {
             return this.lista
         } catch (error) {
