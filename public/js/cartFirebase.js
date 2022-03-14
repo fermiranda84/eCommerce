@@ -1,6 +1,6 @@
 const socket = io.connect()
 
-socket.on('carritoFirebase', carrito => {
+socket.on('carrito', carrito => {
     makeTablaCarrito(carrito)
         .then(html => {
             document.getElementById('tablaCarritoFirebase').innerHTML = html
@@ -20,6 +20,6 @@ function makeTablaCarrito(carrito) {
 
 
 function eliminarProductoCarrito(productoId) {
-    socket.emit('productoCarritoEliminadoFirebase', {id: productoId})
+    socket.emit('productoCarritoEliminado', {id: productoId})
     return 
 }

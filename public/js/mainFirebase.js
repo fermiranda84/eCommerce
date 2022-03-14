@@ -29,7 +29,7 @@ function actualizarProducto(productoId) {
     const stock = document.getElementById(`stock${productoId}`)
     const codigo = document.getElementById(`codigo${productoId}`) 
 
-    socket.emit('productoActualizadoFirebase', {id: productoId, nombre: nombre.value, precio: precio.value, foto: foto.value, descripcion: descripcion.value, stock: stock.value, codigo: codigo.value})
+    socket.emit('productoActualizado', {id: productoId, nombre: nombre.value, precio: precio.value, foto: foto.value, descripcion: descripcion.value, stock: stock.value, codigo: codigo.value})
     
     return
 
@@ -37,7 +37,7 @@ function actualizarProducto(productoId) {
 
 function eliminarProducto(productoId) {
 
-    socket.emit('productoEliminadoFirebase', {id: productoId})
+    socket.emit('productoEliminado', {id: productoId})
     
     return false
 
@@ -53,7 +53,7 @@ function ingresarProducto() {
     const stock = document.getElementById('stockForm')
     const codigo = document.getElementById('codigoForm') 
 
-    socket.emit('productoIngresadoFirebase', {nombre: nombre.value, precio: precio.value, foto: foto.value, descripcion: descripcion.value, stock: stock.value, codigo: codigo.value})
+    socket.emit('productoIngresado', {nombre: nombre.value, precio: precio.value, foto: foto.value, descripcion: descripcion.value, stock: stock.value, codigo: codigo.value})
     
     return false
 
@@ -61,7 +61,7 @@ function ingresarProducto() {
 
 
 function agregarAlCarrito(productoId, productoNombre, productoPrecio, productoFoto, productoDescripcion, productoStock, productoCodigo) {
-    socket.emit('productoCarritoAgregadoFirebase', {id: productoId, nombre: productoNombre, precio: productoPrecio, foto: productoFoto, descripcion: productoDescripcion, stock: productoStock, codigo: productoCodigo})
+    socket.emit('productoCarritoAgregado', {id: productoId, nombre: productoNombre, precio: productoPrecio, foto: productoFoto, descripcion: productoDescripcion, stock: productoStock, codigo: productoCodigo})
     let toastLiveExample = document.getElementById(`liveToast${productoId}`)
     new bootstrap.Toast(toastLiveExample).show()
     return 

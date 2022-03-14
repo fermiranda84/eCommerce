@@ -1,6 +1,6 @@
 const socket = io.connect()
 
-socket.on('carritoMongo', carrito => {
+socket.on('carrito', carrito => {
     makeTablaCarrito(carrito)
         .then(html => {
             document.getElementById('tablaCarritoMongo').innerHTML = html

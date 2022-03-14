@@ -1,8 +1,8 @@
-<% if(productos.claveProductosMongo.length > 0){ %> 
+<% if(productos.claveProductos.length > 0){ %> 
     <div class="container bg-light text-white p-3">
         <h2 class="text-primary mb-5">Productos disponibles en MongoDB</h2>
             <div class="d-flex flex-wrap">
-            <% for (const producto of productos.claveProductosMongo) {%> 
+            <% for (const producto of productos.claveProductos) {%> 
             
                 <div class="card m-3" style="width: 18rem;">
                     <img src="<%=producto.foto %>" class="card-img-top" alt="<%=producto.nombre %>">
