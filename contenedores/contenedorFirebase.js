@@ -18,8 +18,7 @@ try {
 
 }
 
-const db = admin.firestore();
-// const productos = db.collection('productos');
+const db = admin.firestore()
 
 
 class ContenedorFirebase {
@@ -30,22 +29,6 @@ class ContenedorFirebase {
         
     }
 
-
-    // async ingresarProductos() {
-
-    //     try {
-                
-    //     for (const producto of this.coleccion) {
-    //         let doc = productos.doc()
-    //         await doc.create(producto)
-    //     }
-    //     console.log('Docs insertados!')
-            
-    //     } catch (error) {
-    //         console.error(error)
-    //     }
-
-    // }
 
 
     async ingresarProducto(data) {
@@ -155,14 +138,6 @@ class ContenedorFirebase {
 
     async eliminarProductoCarrito(data) {
         
-        // try {
-        //     let resultado = await this.coleccion.deleteOne({_id: data._id})
-        //     return resultado
-    
-        // } catch (error) {
-        //     console.error(`Error: ${error}`)
-        // }
-
         try {
             const doc = this.coleccion.doc(`${data.id}`)
             let item = await doc.delete()
@@ -176,8 +151,5 @@ class ContenedorFirebase {
 
 
 }
-
-// const laClase = new ContenedorFirebase
-// laClase.ingresarProductos()
 
 module.exports = ContenedorFirebase

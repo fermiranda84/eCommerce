@@ -1,5 +1,4 @@
 const fs = require('fs')
-// import fs from 'fs'
 
 module.exports = {
     persProductos: (listaProductos) => {
@@ -42,8 +41,6 @@ module.exports = {
         catch (error) {console.error(error)}
     }
 }
-
-// export default persistencia
 
 
 

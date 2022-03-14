@@ -13,5 +13,5 @@ class ProductosDAO extends Contenedor {
     }
 }
 
-// export default ProductosDAOMongo
+
 module.exports = ProductosDAO

@@ -9,12 +9,18 @@
     <script src="/socket.io/socket.io.js"></script>
 </head>
 <body>
-     <div style="margin-top: 40vh; margin-left: 30vw">
-        <a style="height: 150px; width: 150px;" href="./archivos" class="btn btn-primary m-3"><span style="position: relative; top: 25%; -ms-transform: translateY(-25%); -webkit-transform: translateY(-25%); transform: translateY(-25%); font-size: 1.5rem">Memoria y archivos</span></a>
+     <div style="margin-top: 15vh; margin-left: 20vw">
         <a style="height: 150px; width: 150px;" href="./mongo" class="btn btn-primary m-3"><span style="position: relative; top: 30%; -ms-transform: translateY(-30%); -webkit-transform: translateY(-30%); transform: translateY(-30%); font-size: 1.5rem">MongoDB</span></a>
+        <span class="text-secondary">(setear la variable de entorno a <b>mongo</b> para que funcione correctamente)</span>
+    </div>
+    <div style="margin-top: 5vh; margin-left: 20vw">
         <a style="height: 150px; width: 150px;" href="./firebase" class="btn btn-primary m-3"><span style="position: relative; top: 30%; -ms-transform: translateY(-30%); -webkit-transform: translateY(-30%); transform: translateY(-30%); font-size: 1.5rem">Firebase</span></a>
-     </div>
-
+        <span class="text-secondary">(setear la variable de entorno a <b>firebase</b> para que funcione correctamente)</span>
+    </div>
+    <div style="margin-left: 20vw; margin-top: 5vh;">
+        <a style="height: 60px; width: 400px;" href="./archivos" class="btn btn-secondary m-3"><span style="position: relative; top: 15%; -ms-transform: translateY(-15%); -webkit-transform: translateY(-15%); transform: translateY(-15%); font-size: 1.25rem">Entrega anterior (memoria y archivos)</span></a>
+        <span class="text-secondary">(variable de entorno: <b>archivos</b>)</span>
+    </div>
     <script src="../js/ejs.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
 </body>

@@ -24,6 +24,8 @@ const objContenedorCarrito = new DAOArchivosCarrito()
 let listaProductos = objContenedorProductos.listarProductos();
 let listaCarritos = objContenedorCarrito.listarProductosCarrito();
 
+let administrador = true
+
 //seteo las vistas por defecto para cargar todos los productos y los productos agregado al carrito
 app.get('/', (req, res) => {
     res.render('main', { listaProductos });
@@ -162,19 +164,18 @@ routerCarrito.get('/:id/productos', (req, res)=>{
     }
 })
 
-routerCarrito.post('/:id/productos/:id_prod', (req, res)=>{
+routerCarrito.post('/1/productos/:id_prod', (req, res)=>{
 
-    let carritoId = listaCarritos.find(x => x.id == parseInt(req.params.id))
-    if(carritoId) {
-        let producto = listaProductos.find(x => x.id == parseInt(req.params.id_prod))
-        carritoId.productos.push(producto)
+    let producto = listaProductos.find(x => x.id == parseInt(req.params.id_prod))
+    if(producto) {
+        listaCarritos[0].productos.push(producto)
         res.status(200).json({msg: 'Producto Agregado', data: producto})
 
         moduloPersistencia.persCarrito(listaCarritos)
 
     }
     else {
-        res.status(200).json({error: 'Carrito no encontrado'})
+        res.status(200).json({error: 'Producto no encontrado'})
     }
 
   

@@ -1,5 +1,4 @@
-const ContenedorMongo = require('../../contenedores/contenedorMongoDb');
-// import ContenedorMongo from "../../contenedores/contenedorMongoDb.js"
+const ContenedorMongo = require('../../contenedores/contenedorMongoDb')
 const mongoose = require('mongoose');
 
 
@@ -24,5 +23,5 @@ class CarritoDAOMongo extends ContenedorMongo {
     }
 }
 
-// export default ProductosDAOMongo
+
 module.exports = CarritoDAOMongo

@@ -12,5 +12,4 @@ class CarritoDAO extends Contenedor {
     }
 }
 
-// export default ProductosDAOMongo
 module.exports = CarritoDAO

@@ -25,8 +25,8 @@ switch (process.env.DB_TYPE) {
         daoCarrito = daoCarritoFirebase
       break;
     default:
-      daoProductos = daoProductosArchivos
-      daoCarrito = daoCarritoArchivos
+        daoProductos = daoProductosMongo
+        daoCarrito = daoCarritoMongo
   }
 
   module.exports = {

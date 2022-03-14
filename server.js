@@ -6,7 +6,7 @@ const DAO = require('./daos/seleccion.dao')
 const objContenedorProductos = new DAO.daoProductos()
 const objContenedorCarrito = new DAO.daoCarrito()
 const app = express();
-app.use('/', rutas);
+app.use('/', rutas)
 const httpServer = new HttpServer(app);
 const io = new IOServer(httpServer)
 
